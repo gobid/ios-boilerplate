@@ -1,0 +1,22 @@
+PODS:
+  - Alamofire (3.1.3)
+  - EVReflection (2.13.2)
+  - JDSwiftAvatarProgress (1.0.3)
+  - PKHUD (2.2.5)
+  - SwiftyUserDefaults (2.0.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.0)
+  - EVReflection (~> 2.6)
+  - JDSwiftAvatarProgress
+  - PKHUD
+  - SwiftyUserDefaults
+
+SPEC CHECKSUMS:
+  Alamofire: 9f93b56389e48def9220dd57d1f44b1927229a5a
+  EVReflection: b42bd75ebda0a56f50eb347d0f45b7de7e031361
+  JDSwiftAvatarProgress: 47abbed863f21ca3208a32a660876ffa124410e9
+  PKHUD: 15d9db01fb008bb9247c6d785c585f587955b113
+  SwiftyUserDefaults: 1266e9734c68bcfbac8294ee84173dc8ba6db312
+
+COCOAPODS: 0.39.0

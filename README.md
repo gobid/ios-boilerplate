@@ -1,2 +1,1 @@
 # ios-boilerplate
-ios boilerplate
