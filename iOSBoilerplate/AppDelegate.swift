@@ -11,23 +11,20 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    
-
     var window: UIWindow?
-
     var email: String?
     var firstName: String?
     var lastName: String?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         // Override point for customization after application launch.
         FBSDKLoginButton.classForCoder()
         GPPSignInButton.classForCoder()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         //Optionally add to ensure your credentials are valid:
         FBSDKLoginManager.renewSystemCredentials { (result:ACAccountCredentialRenewResult, error:NSError!) -> Void in
-            //
-            
         }
 
         return true
@@ -65,17 +62,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    //Here's the facebook login code, have your login procedure call this:
+    // Here's the facebook login code, have your login procedure call this:
     
     let facebookReadPermissions = ["public_profile", "email", "user_friends"]
-    //Some other options: "user_about_me", "user_birthday", "user_hometown", "user_likes", "user_interests", "user_photos", "friends_photos", "friends_hometown", "friends_location", "friends_education_history"
+    // Some other options: "user_about_me", "user_birthday", "user_hometown", "user_likes", "user_interests", "user_photos", "friends_photos", "friends_hometown", "friends_location", "friends_education_history"
     
     func loginToFacebookWithSuccess(successBlock: () -> (), andFailure failureBlock: (NSError?) -> ()) {
         
         if FBSDKAccessToken.currentAccessToken() != nil {
-            //For debugging, when we want to ensure that facebook login always happens
-            //FBSDKLoginManager().logOut()
-            //Otherwise do:
+            // For debugging, when we want to ensure that facebook login always happens
+            // FBSDKLoginManager().logOut()
+            // Otherwise do:
             return
         }
         
