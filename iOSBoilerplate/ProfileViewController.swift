@@ -64,8 +64,6 @@ class ProfileViewController: BaseVC {
         userNameText.rippleLocation = .Center
         userNameText.cornerRadius = 0
         userNameText.bottomBorderEnabled = true
-
-        
         
         self.getProfile()
     }
@@ -78,13 +76,11 @@ class ProfileViewController: BaseVC {
     }
     
     @IBAction func logout(sender: AnyObject) {
-        if ( GPPSignIn.sharedInstance().userID != nil )
-        {
+        if ( GPPSignIn.sharedInstance().userID != nil ) {
             GPPSignIn.sharedInstance().signOut()
         }
         
-        if ( FBSDKAccessToken.currentAccessToken() != nil )
-        {
+        if ( FBSDKAccessToken.currentAccessToken() != nil ) {
             FBSDKLoginManager().logOut()
         }
         
@@ -95,19 +91,15 @@ class ProfileViewController: BaseVC {
     
     func getProfile() {
         //  if(!validateFields()){return}
-        
         showProgress()
         
-        //  let json = Defaults[.serverToken]
+        // let json = Defaults[.serverToken]
         // let jsonDic = convertStringToDictionary(json)
         let accessToken = ServerAccessToken(dictionary: Defaults[.serverToken])
-        
         
         let headers = [
             "Authorization": " Django " + accessToken.access_token!
         ]
-        
-        
         
         Alamofire.request(.GET, Constants.BASE_SERVER_URL + Constants.NAMESPACE_ME, headers:headers)
             .responseJSON { response in
@@ -134,18 +126,13 @@ class ProfileViewController: BaseVC {
                     .responseJSON { response in
                         if response.response == nil {
                             self.hideProgress();
-                            
                             self.showDialog("Unable to get user data.\nPlease try again later.")
-                            
                             return;
                         }
                         
-                        
                         if (response.response?.statusCode)! != 200 {
                             self.hideProgress();
-                            
                             self.showDialog("Unable to get user data.\nPlease try again later.")
-                            
                             return
                         }
                         
@@ -162,7 +149,6 @@ class ProfileViewController: BaseVC {
                                 
                                 if (response.response?.statusCode)! != 200 {
                                     self.showDialog("Unable to get user data.\nPlease try again later.")
-                                    
                                     return
                                 }
                                 
@@ -172,67 +158,60 @@ class ProfileViewController: BaseVC {
                                 user.loginType = User.loggedInUser?.loginType
                                 user.profilePictureUrl = User.loggedInUser?.profilePictureUrl
                                 self.loadData(user);
-                                
                         }
-                        
-                        
-                        
+  
                 }
-                
-                
         }
     }
     
-        @IBAction func updateProfile(sender: AnyObject) {
-            if(!validateFields()){return}
-            showProgress()
-            let accessToken = ServerAccessToken(dictionary: Defaults[.serverToken])
-            let headers = [
-                "Authorization": " Django " + accessToken.access_token!
-            ]
-            let parameters = [
-                "first_name": firstNameText.text!,
-                "last_name": lastNameText.text!
-            ]
-            
-            Alamofire.request(.PATCH, Constants.BASE_SERVER_URL + Constants.NAMESPACE_ME_INFO.stringByReplacingOccurrencesOfString("#", withString: String(self.djangoUserId)), headers:headers, parameters:parameters)
-                .responseJSON { response in
-                    self.hideProgress();
-                    if response.response == nil {
-                        self.showDialog("Unable to update profile data.\nPlease try again later.")
-                        return;
-                    }
-                    
-                    if (response.response?.statusCode)! != 200 {
-                        self.showDialog("Unable to update user data.\nPlease try again later.")
-                        
-                        return
-                    }
-                    
-                    let jsonDic = response.result.value as! NSDictionary
-                    
-                    let user = User(dictionary:jsonDic)
-                    
-                    user.loginType = User.loggedInUser?.loginType
-                    user.profilePictureUrl = User.loggedInUser?.profilePictureUrl
-                    self.loadData(user);
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-            }
-            
+    @IBAction func updateProfile(sender: AnyObject) {
+        if(!validateFields()){
+            return
+        }
         
+        showProgress()
         
+        let accessToken = ServerAccessToken(dictionary: Defaults[.serverToken])
+        
+        let headers = [
+            "Authorization": " Django " + accessToken.access_token!
+        ]
+        
+        let parameters = [
+            "first_name": firstNameText.text!,
+            "last_name": lastNameText.text!
+        ]
+        
+        Alamofire.request(.PATCH, Constants.BASE_SERVER_URL + Constants.NAMESPACE_ME_INFO.stringByReplacingOccurrencesOfString("#", withString: String(self.djangoUserId)), headers:headers, parameters:parameters)
+            .responseJSON { response in
+                
+                self.hideProgress();
+                
+                if response.response == nil {
+                    self.showDialog("Unable to update profile data.\nPlease try again later.")
+                    return;
+                }
+                
+                if (response.response?.statusCode)! != 200 {
+                    self.showDialog("Unable to update user data.\nPlease try again later.")
+                    return
+                }
+                
+                let jsonDic = response.result.value as! NSDictionary
+                
+                let user = User(dictionary:jsonDic)
+                
+                user.loginType = User.loggedInUser?.loginType
+                user.profilePictureUrl = User.loggedInUser?.profilePictureUrl
+                self.loadData(user);
+        }
     }
     
     func loadData(user:User){
         if user.loginType != User.LOGIN_TYPE_EMAIL && user.profilePictureUrl != nil {
-        profileImageView.setImageWithURL(NSURL(string: user.profilePictureUrl!)!)
+            profileImageView.setImageWithURL(NSURL(string: user.profilePictureUrl!)!)
         }
+        
         emailTextField.text = user.email
         firstNameText.text = user.first_name
         lastNameText.text = user.last_name
@@ -240,12 +219,12 @@ class ProfileViewController: BaseVC {
     }
     
     func validateFields()->Bool{
+        var errMsg = ""
         
-        var errMsg=""
-        if firstNameText.text==""{
+        if (firstNameText.text == "") {
             errMsg = "Please enter a valid first name"
-            
-        }else if lastNameText.text==""{
+        }
+        else if (lastNameText.text == "") {
             errMsg = "Please enter a valid last name"
         }
         
@@ -253,9 +232,9 @@ class ProfileViewController: BaseVC {
             showDialog(errMsg);
             return false
         }
+        
         return true
     }
-    
     
     @IBAction func backToMenu(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)

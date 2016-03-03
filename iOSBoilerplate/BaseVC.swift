@@ -9,10 +9,12 @@
 import Foundation
 
 class BaseVC:UIViewController{
+    
     func showProgress(){
         PKHUD.sharedHUD.contentView = PKHUDProgressView()
         PKHUD.sharedHUD.show()
     }
+    
     func hideProgress(){
         
         PKHUD.sharedHUD.hide()
@@ -36,5 +38,5 @@ class BaseVC:UIViewController{
         }
         return nil
     }
-    
+
 }

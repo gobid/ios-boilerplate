@@ -13,5 +13,4 @@ extension DefaultsKeys {
     static let username = DefaultsKey<String?>("username")
     static let email = DefaultsKey<String?>("email")
     static let serverToken = DefaultsKey<NSDictionary>("token")
- 
-   }
+}

@@ -16,13 +16,11 @@ import SwiftyUserDefaults
 
 class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDelegate, GPPSignInDelegate {
     @IBOutlet weak var gppSignInButton: GPPSignInButton!
-    
     @IBOutlet weak var loginButton: FBSDKLoginButton!
-    
     @IBOutlet var txtPassword: MKTextField!
     @IBOutlet var txtUserName: MKTextField!
-    override func viewDidLoad()
-    {
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
@@ -30,9 +28,8 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
         loginButton.delegate = self;
-      
-
         
         gppSignInButton?.colorScheme = kGPPSignInButtonColorSchemeDark
         gppSignInButton?.style = kGPPSignInButtonStyleWide
@@ -63,37 +60,33 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
     }
     
     override func viewDidAppear(animated: Bool) {
-        if (FBSDKAccessToken.currentAccessToken() != nil)
-        {
-            self.fetchUserInforFromFacebook({ (success) -> () in
+        if (FBSDKAccessToken.currentAccessToken() != nil) {
+            self.fetchUserInforFromFacebook({(success) -> () in
                 NSLog("FetchFinished")
-                //                FBSDKLoginManager().logOut()
+                // FBSDKLoginManager().logOut()
                 self.userLoggedInWithSocialMedia()
             })
-            
         }
-        else
-        {
+        else {
             loginButton.readPermissions = ["public_profile", "email", "user_friends"]
         }
         
         let email = Defaults[.email]
-        if(email != nil){
+        
+        if(email != nil) {
             let dict = Defaults[.serverToken] as NSDictionary!
             let acct:ServerAccessToken =  ServerAccessToken(dictionary:dict)
             if acct.access_token != nil {
                 gotoDashboard()
             }
         }
+        
         let signIn = GPPSignIn.sharedInstance()
 
-        if (( signIn?.idToken ) != nil)
-        {
-            //            NSLog("SignINToken = %@",(signIn?.idToken)!)
-            //            signIn?.signOut()
-            
+        if (( signIn?.idToken ) != nil) {
+            // NSLog("SignINToken = %@",(signIn?.idToken)!)
+            // signIn?.signOut()
             signIn.trySilentAuthentication()
-            
         }
     }
     
@@ -115,39 +108,37 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
     //    }
     
     /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
     
-    // Configure the cell...
-    
-    return cell
-    }
+            // Configure the cell...
+            return cell
+        }
     */
     
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
     // Return false if you do not want the specified item to be editable.
-    return true
+        return true
     }
     */
     
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
     }
     */
     
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
     }
     */
     
@@ -185,8 +176,7 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
         else {
             // If you ask for multiple permissions at once, you
             // should check if specific permissions missing
-            //            if result.grantedPermissions.contains("email")
-            //            {
+            // if result.grantedPermissions.contains("email") {
             // Do work
             NSLog("TokenString=%@", FBSDKAccessToken.currentAccessToken().tokenString)
             NSLog("UserID=%@", FBSDKAccessToken.currentAccessToken().userID)
@@ -196,30 +186,26 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                     self.userLoggedInWithSocialMedia()
                 }
             })
-            //            }
+            // }
         }
     }
     
     func fetchUserInforFromFacebook(withcompletionHandler: (success:Bool) ->()){
         if ((FBSDKAccessToken.currentAccessToken()) != nil){
-            
             let request = FBSDKGraphRequest(graphPath:"me", parameters:["fields":"id,email,name,first_name,last_name,picture.width(480).height(480)"])
             request.startWithCompletionHandler({connection, result, error in
                 if error == nil {
                     NSLog("%@", result.valueForKey("id") as! String)
                     NSLog("%@", result.valueForKey("name") as! String)
                     NSLog("%@", result.valueForKey("email") as! String)
-                    
                     NSLog("%@", result as! NSDictionary)
+                    
                     //
-                    //                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    // let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     //
-                    //                    appDelegate.email = result.valueForKey("email") as? String
-                    //                    appDelegate.firstName = result.valueForKey("first_name") as? String
-                    //                    appDelegate.lastName = result.valueForKey("last_name") as? String
-                    
-                    
-                    
+                    // appDelegate.email = result.valueForKey("email") as? String
+                    // appDelegate.firstName = result.valueForKey("first_name") as? String
+                    // appDelegate.lastName = result.valueForKey("last_name") as? String
                     
                     let user =  User();
                     user.userId=FBSDKAccessToken.currentAccessToken().userID
@@ -236,15 +222,12 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                     User.loggedInUser=user;
                     self.resetForm();
                     withcompletionHandler(success: true)
-                    
-                }else{
+                }
+                else {
                     withcompletionHandler(success: false)
                 }
             })
-            
-            
         }
-        
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
@@ -255,34 +238,29 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
     }
     
     func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!) {
-        if (( error ) != nil)
-        {
+        if (( error ) != nil) {
             NSLog("google auth failed!")
         }
-        else
-        {
+        else {
             NSLog("finished with auth!")
             
             let signIn = GPPSignIn.sharedInstance()
-            if (( signIn?.idToken ) != nil)
-            {
+            if (( signIn?.idToken ) != nil) {
                 NSLog("SignINToken = %@",(signIn?.idToken)!)
             }
             
-            if ( signIn.userID != nil )
-            {
+            if ( signIn.userID != nil ) {
                 NSLog("ID=%@", signIn.userID)
                 NSLog("Email=%@", signIn.userEmail)
                 
                 let usr = GPPSignIn.sharedInstance().googlePlusUser
                 
-                if (( usr ) != nil)
-                {
+                if (( usr ) != nil) {
                     NSLog("UsernameFirst=%@", usr.name.givenName)
                     NSLog("UsernameLast=%@", usr.name.familyName)
                     
-                    //                    appDelegate.firstName = usr.name.givenName
-                    //                    appDelegate.lastName = usr.name.familyName
+                    // appDelegate.firstName = usr.name.givenName
+                    // appDelegate.lastName = usr.name.familyName
                 }
                 
                 //appDelegate.email = signIn.userEmail
@@ -298,29 +276,23 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                 User.loggedInUser=user;
                 self.resetForm();
                 self.userLoggedInWithSocialMedia();
-                
-                
             }
         }
     }
     
     func userLoggedInWithSocialMedia(){
         
-        //            if (!TextUtils.isEmpty(Prefs.getString(mContext.getString(R.string.key_user_access_token), ""))) { // Already Logged in
-        //                goToLandingPage();
-        //                return;
-        //            }
-        
-        //            showProgressDialog(R.string.msg_sigining_in);
-        
-        
-        
-        
+        // if (!TextUtils.isEmpty(Prefs.getString(mContext.getString(R.string.key_user_access_token), ""))) { 
+        // Already Logged in
+        //     goToLandingPage();
+        //     return;
+        // }
+        // showProgressDialog(R.string.msg_sigining_in);
         
         showProgress();
-        Alamofire.request(.POST,Constants.BASE_SERVER_URL + Constants.NAMESPACE_TOKEN_EXCHANGE,  parameters: [Constants.KEY_CLIENT_ID: Constants.CLIENT_ID,Constants.KEY_CLIENT_SECRITE: Constants.CLIENT_SECRIT,"backend":User.loggedInUser!.isFacebookUser() ? "facebook" : "google-oauth2","token":(User.loggedInUser?.accessToken)!,"grant_type":"convert_token"])
-            .responseJSON { response in
+        Alamofire.request(.POST,Constants.BASE_SERVER_URL + Constants.NAMESPACE_TOKEN_EXCHANGE,  parameters: [Constants.KEY_CLIENT_ID: Constants.CLIENT_ID,Constants.KEY_CLIENT_SECRITE: Constants.CLIENT_SECRIT,"backend":User.loggedInUser!.isFacebookUser() ? "facebook" : "google-oauth2","token":(User.loggedInUser?.accessToken)!,"grant_type":"convert_token"]).responseJSON { response in
                 self.hideProgress();
+            
                 if response.response == nil {
                     self.showDialog("Unable to login into server.\nPlease try again later.")
                     return;
@@ -339,29 +311,20 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                 User.loggedInUser?.accessToken=serverAccessToken.access_token;
                 self.resetForm();
                 self.gotoDashboard();
-                
         }
-        
-        
-        
-        
-        
         // on server login
-        
-        
-        
     }
     
-    
-    
-    func didDisconnectWithError ( error: NSError) -> Void{
+    func didDisconnectWithError ( error: NSError) -> Void {
         NSLog("didDisconnectWithError!")
     }
+    
     @IBAction func loginClicked(sender: AnyObject) {
         showProgress();
         Alamofire.request(.POST, Constants.BASE_SERVER_URL + Constants.NAMESPACE_EMAIL_SIGN_IN,  parameters: [Constants.KEY_CLIENT_ID: Constants.CLIENT_ID,Constants.KEY_CLIENT_SECRITE: Constants.CLIENT_SECRIT,"username": (txtUserName?.text)!,"password":txtPassword.text!,"grant_type":"password"])
             .responseJSON { response in
                 self.hideProgress();
+                
                 if response.response == nil {
                     self.showDialog("Unable to login into server.\nPlease try again later.")
                     return;
@@ -385,13 +348,10 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                 User.loggedInUser=user;
                 self.resetForm();
                 self.gotoDashboard();
-                
         }
-        
-        
     }
+    
     @IBAction func signUpClicked(sender: AnyObject) {
-        
         showProgress();
         Alamofire.request(.POST, Constants.BASE_SERVER_URL + Constants.NAMESPACE_EMAIL_SIGNUP,  parameters: [Constants.KEY_CLIENT_ID: Constants.CLIENT_ID,Constants.KEY_CLIENT_SECRITE: Constants.CLIENT_SECRIT,"username": (txtUserName?.text)!,"password":txtPassword.text!,"email": txtUserName.text!])
             .response { request, response, data, error in
@@ -401,6 +361,7 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                     self.showDialog("Unable to signup right now. Please try again later.");
                     return;
                 }
+                
                 let statusCode = (response?.statusCode)!
                 
                 if (statusCode != 201) {
@@ -408,22 +369,19 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
                     return;
                 }
                 
-                
                 self.resetForm();
                 self.showDialog("Your account has been created successfully. Please check your email for activation link.");
                 self.resetForm();
-                
         }
-        
     }
     
     func validateFields()->Bool{
+        var errMsg = ""
         
-        var errMsg=""
         if !isValidEmail(){
             errMsg = "Please enter a valid email"
             
-        }else if !isValidPassword(){
+        } else if !isValidPassword(){
             errMsg = "Please enter a valid password"
         }
         
@@ -431,13 +389,13 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
             showDialog(errMsg);
             return false
         }
+        
         return true
     }
     
     
     func isValidEmail() -> Bool {
         let testStr = txtUserName.text;
-        
         // println("validate calendar: \(testStr)")
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
@@ -452,29 +410,32 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
     @IBAction func forgotPasswordClicked(sender: AnyObject) {
         if !isValidEmail(){
             showDialog("Please enter a valid email")
-            return}
-        
+            return
+        }
         showProgress();
+        
         Alamofire.request(.POST, Constants.BASE_SERVER_URL + Constants.NAMESPACE_PASSWORD_RESET, parameters: [Constants.KEY_CLIENT_ID: Constants.CLIENT_ID,Constants.KEY_CLIENT_SECRITE: Constants.CLIENT_SECRIT,"email": (txtUserName?.text)!])
             .response { request, response, data, error in
                 self.hideProgress();
+                
                 if(error != nil){
                     self.showDialog("Unable to login into server.\nPlease try again later.")
                     return;
                 }
+                
                 let statusCode = (response?.statusCode)!
                 
                 if (statusCode != 200) {
                     self.showDialog("Invalid token received from server. Please try again later.");
                     return;
                 }
+                
                 self.resetForm();
                 self.showDialog("A password reset link has been sent to your email.")
-                
-                
         }
         
     }
+    
     func resetForm(){
         txtUserName.text = ""
         txtPassword.text=""
@@ -483,6 +444,5 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
     func gotoDashboard(){
         let viewcontroller = self.storyboard?.instantiateViewControllerWithIdentifier("home")
         self.presentViewController(viewcontroller!, animated: true, completion: nil)
-        
     }
 }

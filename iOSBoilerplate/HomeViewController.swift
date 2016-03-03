@@ -15,8 +15,6 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-               
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,26 +35,21 @@ class HomeViewController: UIViewController {
 
     @IBAction func btnViewProfileClicked(sender: AnyObject) {
         let viewcontroller:UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("profile"))!
-        
         self.presentViewController(viewcontroller, animated: true, completion: nil)
-
     }
     
     
     @IBAction func logout(sender: AnyObject) {
-        if ( GPPSignIn.sharedInstance().userID != nil )
-        {
+        if ( GPPSignIn.sharedInstance().userID != nil ) {
             GPPSignIn.sharedInstance().signOut()
         }
         
-        if ( FBSDKAccessToken.currentAccessToken() != nil )
-        {
+        if ( FBSDKAccessToken.currentAccessToken() != nil ) {
             FBSDKLoginManager().logOut()
         }
         
         Defaults[.email] = nil
 
-        
         let viewcontroller:UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("signin"))!
         
         self.presentViewController(viewcontroller, animated: true, completion: nil)
