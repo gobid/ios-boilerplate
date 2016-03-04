@@ -388,6 +388,7 @@
 				TargetAttributes = {
 					27ACB2451C048D3E00DEB7FF = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 626S3G94S4;
 					};
 				};
 			};
@@ -632,6 +633,8 @@
 			baseConfigurationReference = 789AD59CD373D6AC54EABEBB /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -643,6 +646,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.iOSBoilerplate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iOSBoilerplate/Bridge-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -653,6 +657,8 @@
 			baseConfigurationReference = 80585FECA9FB2DB5B21C2AC7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -664,6 +670,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.iOSBoilerplate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iOSBoilerplate/Bridge-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

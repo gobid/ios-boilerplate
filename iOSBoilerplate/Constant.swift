@@ -8,9 +8,9 @@
 
 import Foundation
 struct Constants{
-static let GOOGLE_CLIENT_ID = "963652034131-ge0ler6d8puvuuln600nrd684no0pdhm.apps.googleusercontent.com"
+static let GOOGLE_CLIENT_ID = "com.googleusercontent.apps.919337801636-67vapcbklt6dbqhmshmc44gbd3hvv6vp"
 
-static let NAMESPACE_TOKEN_EXCHANGE = "auth/convert-token"
+static let NAMESPACE_TOKEN_EXCHANGE = "/auth/convert-token"
     
 static let BASE_SERVER_URL = "http://boilerplate-staging.elasticbeanstalk.com/"
     
@@ -38,7 +38,7 @@ static let METHOD_GET = "GET"
     
 static let GRANT_TYPE = "grant_type"
     
-static let NAMESPACE_ME = "djoser-auth/me/"
+static let NAMESPACE_ME = "/djoser-auth/me/"
     
 static let NAMESPACE_ME_INFO = "/api/users/#/"
 
