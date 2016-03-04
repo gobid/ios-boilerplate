@@ -8,7 +8,7 @@
 
 import Foundation
 struct Constants{
-static let GOOGLE_CLIENT_ID = "com.googleusercontent.apps.919337801636-67vapcbklt6dbqhmshmc44gbd3hvv6vp"
+    static let GOOGLE_CLIENT_ID = "919337801636-67vapcbklt6dbqhmshmc44gbd3hvv6vp.apps.googleusercontent.com"
 
 static let NAMESPACE_TOKEN_EXCHANGE = "/auth/convert-token"
     
