@@ -19,7 +19,6 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
     @IBOutlet weak var loginButton: FBSDKLoginButton!
     @IBOutlet var txtPassword: MKTextField!
     @IBOutlet var txtUserName: MKTextField!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +27,6 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
         loginButton.delegate = self;
         
         gppSignInButton?.colorScheme = kGPPSignInButtonColorSchemeDark
@@ -195,18 +193,6 @@ class SigninTableViewController: BaseVC, UITextFieldDelegate, FBSDKLoginButtonDe
             let request = FBSDKGraphRequest(graphPath:"me", parameters:["fields":"id,email,name,first_name,last_name,picture.width(480).height(480)"])
             request.startWithCompletionHandler({connection, result, error in
                 if error == nil {
-                    NSLog("%@", result.valueForKey("id") as! String)
-                    NSLog("%@", result.valueForKey("name") as! String)
-                    NSLog("%@", result.valueForKey("email") as! String)
-                    NSLog("%@", result as! NSDictionary)
-                    
-                    //
-                    // let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    //
-                    // appDelegate.email = result.valueForKey("email") as? String
-                    // appDelegate.firstName = result.valueForKey("first_name") as? String
-                    // appDelegate.lastName = result.valueForKey("last_name") as? String
-                    
                     let user =  User();
                     user.userId=FBSDKAccessToken.currentAccessToken().userID
                     user.email = result.valueForKey("email") as? String

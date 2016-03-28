@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FBSDKLoginKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var lastName: String?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         // Override point for customization after application launch.
         FBSDKLoginButton.classForCoder()
         GPPSignInButton.classForCoder()
@@ -26,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Optionally add to ensure your credentials are valid:
         FBSDKLoginManager.renewSystemCredentials { (result:ACAccountCredentialRenewResult, error:NSError!) -> Void in
         }
-
+        Kickflip.setupWithAPIKey(Constants.KICKFLIP_API_KEY, secret: Constants.KICKFLIP_API_SECRET)
         return true
     }
     
